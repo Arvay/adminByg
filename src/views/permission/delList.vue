@@ -72,7 +72,8 @@
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
-            @change="statusChange(scope.row.id)"/>
+            active-color="#13ce66"
+            inactive-color="#ff4949"/>
         </template>
       </el-table-column>
 
@@ -166,16 +167,13 @@ export default {
     this.getList(1)
   },
   methods: {
-    statusChange(id, val) {
-      console.log(id, val)
-    },
     remUser(id) {
       updataUserInfo({ isDel: 1, id: id }).then(res => {
         this.getList(this.pageNum)
       })
     },
     getList(page) {
-      getList({}, page, 0).then(response => {
+      getList({}, page, 1).then(response => {
         const data = response.data
         this.sum = data.num
         this.infoList = data.data

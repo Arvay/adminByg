@@ -2,9 +2,9 @@ import request from '@/utils/request'
 
 const airHost = '/api'
 
-export function getList(query, a) {
+export function getList(query, a, del) {
   return request({
-    url: `${airHost}/getlistdetl20?isDel=0&page=${a}`,
+    url: `${airHost}/getlistdetl20?isDel=${del}&page=${a}`,
     method: 'get',
     params: query
   })

@@ -72,13 +72,12 @@ export const asyncRouterMap = [
       },
       {
         path: 'directive',
-        component: () => import('@/views/permission/directive'),
-        name: 'DirectivePermission',
+        component: () => import('@/views/permission/delList'),
+        name: '删除记录',
         meta: {
-          title: 'directivePermission'
+          title: '删除记录'
           // if do not set roles, means: this page does not require permission
-        },
-        hidden: true
+        }
       }
     ]
   },
