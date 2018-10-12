@@ -78,6 +78,16 @@ export const asyncRouterMap = [
           title: '删除记录'
           // if do not set roles, means: this page does not require permission
         }
+      },
+      {
+        path: 'update/:id',
+        component: () => import('@/views/permission/base/update'),
+        name: '编辑',
+        hidden: true,
+        meta: {
+          title: '编辑'
+          // if do not set roles, means: this page does not require permission
+        }
       }
     ]
   },

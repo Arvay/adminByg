@@ -4,30 +4,26 @@
     <div>
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="状态">
-          <el-select v-model="formInline.region" placeholder="选择状态" style="width: 110px">
+          <el-select v-model="formInline.region" placeholder="选择状态" style="width: 110px" @change="statusSeach">
             <el-option label="未处理" value="0"/>
             <el-option label="已处理" value="1"/>
-            <el-option label="全部" value="2"/>
+            <el-option label="全部" value=""/>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="乘车人">
-          <el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>
-        </el-form-item>
-
         <el-form-item label="手机号">
-          <el-input v-model="formInline.user" style="width: 120px" placeholder="在此输入"/>
+          <el-input v-model="formInline.phone" style="width: 120px" placeholder="在此输入" @keyup.enter.native="getList(1)"/>
         </el-form-item>
 
-        <el-form-item label="出发地">
+        <!--<el-form-item label="出发地">
           <el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>
         </el-form-item>
 
         <el-form-item label="目的地">
           <el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>
-        </el-form-item>
+        </el-form-item>-->
 
-        <el-form-item label="席别">
+       <!-- <el-form-item label="席别">
           <el-select v-model="formInline.region" placeholder="选择状态" style="width: 110px">
             <el-option label="商务座" value="0"/>
             <el-option label="特等座" value="1"/>
@@ -42,11 +38,8 @@
             <el-option label="硬座" value="10"/>
             <el-option label="无座" value="11"/>
           </el-select>
-        </el-form-item>
+        </el-form-item>-->
 
-        <el-form-item label="搜索">
-          <el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>
-        </el-form-item>
       </el-form>
     </div>
 
@@ -72,28 +65,45 @@
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
-            @change="statusChange(scope.row.id)"/>
+            :active-value="1"
+            :inactive-value="0"
+            @change="statusChange(scope.row.id, scope.row.status)"/>
         </template>
       </el-table-column>
 
       <el-table-column
+        :show-overflow-tooltip="true"
         label="乘车人信息">
-        <template slot-scope="scope">{{ scope.row.user_name }}</template>
+        <template slot-scope="scope">
+          <span v-for="(val, index) in scope.row.user_list" :key="index">
+            {{ val.userName }}--{{ val.userId }}--{{ val.userType }}
+          </span>
+        </template>
       </el-table-column>
 
       <el-table-column
+        :show-overflow-tooltip="true"
         label="账号">
         <template slot-scope="scope">{{ scope.row.name_12306 }} -- {{ scope.row.pwd_12306 }}</template>
       </el-table-column>
 
       <el-table-column
+        :show-overflow-tooltip="true"
         label="出发地-目的地">
         <template slot-scope="scope">{{ scope.row.start_site }} -- {{ scope.row.end_site }}</template>
       </el-table-column>
 
       <el-table-column
+        :show-overflow-tooltip="true"
+        label="乘车日期">
+        <template slot-scope="scope">
+          <span v-for="(val, index) in scope.row.start_time" :key="index">{{ val }};</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column
         label="乘车时间">
-        <template slot-scope="scope">{{ scope.row.train_time }}</template>
+        <template slot-scope="scope">{{ scope.row.train_time }} -- {{ scope.row.end_train_time }}</template>
       </el-table-column>
 
       <el-table-column
@@ -101,17 +111,21 @@
         <template slot-scope="scope">{{ scope.row.user_phone }}</template>
       </el-table-column>
 
-      <el-table-column
+      <!--<el-table-column
         label="车次">
         <template slot-scope="scope">{{ scope.row.address }}</template>
-      </el-table-column>
+      </el-table-column>-->
 
       <el-table-column
+        :show-overflow-tooltip="true"
         label="席别">
-        <template slot-scope="scope">{{ scope.row.seat }}</template>
+        <template slot-scope="scope">
+          <span v-for="(val, index) in scope.row.seat" :key="index">{{ val }};</span>
+        </template>
       </el-table-column>
 
       <el-table-column
+        :show-overflow-tooltip="true"
         label="备注">
         <template slot-scope="scope">{{ scope.row.user_message }}</template>
       </el-table-column>
@@ -119,7 +133,8 @@
       <el-table-column
         label="操作">
         <template slot-scope="scope">
-          <el-button type="danger" icon="el-icon-delete" circle @click="remUser(scope.row.id)"/>
+          <span style="color: #409EFF;cursor: pointer" @click="update(scope.row.id)">查看&nbsp;&nbsp;</span>
+          <span style="color: red;cursor: pointer" @click="remUser(scope.row.id)">删除</span>
         </template>
       </el-table-column>
     </el-table>
@@ -140,6 +155,7 @@ export default {
       sum: 0,
       infoList: [],
       formInline: {
+        phone: '',
         user: '',
         region: ''
       },
@@ -166,8 +182,18 @@ export default {
     this.getList(1)
   },
   methods: {
+    statusSeach() {
+      this.formInline.phone = ''
+      this.getList(1)
+    },
     statusChange(id, val) {
-      console.log(id, val)
+      updataUserInfo({ status: val, id: id }).then(res => {
+        this.getList(this.pageNum)
+      })
+    },
+    update(id) {
+      this.$router.push({ path: '/permission/upDate/' + id })
+      console.log(id)
     },
     remUser(id) {
       updataUserInfo({ isDel: 1, id: id }).then(res => {
@@ -175,7 +201,7 @@ export default {
       })
     },
     getList(page) {
-      getList({}, page, 0).then(response => {
+      getList({}, page, 0, this.formInline.phone, this.formInline.region).then(response => {
         const data = response.data
         this.sum = data.num
         this.infoList = data.data
