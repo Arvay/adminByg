@@ -23,7 +23,7 @@
           <el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>
         </el-form-item>-->
 
-       <!-- <el-form-item label="席别">
+        <!-- <el-form-item label="席别">
           <el-select v-model="formInline.region" placeholder="选择状态" style="width: 110px">
             <el-option label="商务座" value="0"/>
             <el-option label="特等座" value="1"/>
