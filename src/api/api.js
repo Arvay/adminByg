@@ -3,6 +3,12 @@ import request from '@/utils/request'
 const airHost = '/api'
 
 export function getList(query, page, del, phone, status) {
+  if (phone === undefined) {
+    phone = ''
+  }
+  if (status === undefined) {
+    status = ''
+  }
   return request({
     url: `${airHost}/getlistdetl20?isDel=${del}&page=${page}&user_phone=${phone}&status=${status}`,
     method: 'get',
