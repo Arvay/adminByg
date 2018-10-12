@@ -3,7 +3,7 @@
 
     <div>
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="状态">
+        <el-form-item label="状222态">
           <el-select v-model="formInline.region" placeholder="选择状态" style="width: 110px">
             <el-option label="未处理" value="0"/>
             <el-option label="已处理" value="1"/>
