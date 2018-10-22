@@ -32,6 +32,14 @@ export function getUserInfo(data, id) {
   })
 }
 
+export function getListAll(data, id) {
+  return request({
+    url: `${airHost}/getList`,
+    method: 'get',
+    params: data
+  })
+}
+
 //
 // export var Api = {
 //   common: {

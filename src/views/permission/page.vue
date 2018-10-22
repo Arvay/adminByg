@@ -47,7 +47,7 @@
 
     <el-button type="danger" icon="el-icon-delete">删除选中</el-button>
     <el-button type="primary">已处理</el-button>
-    <el-button type="primary" icon="el-icon-download">导出</el-button>
+    <el-button type="primary" icon="el-icon-download" @click="getExcel">导出</el-button>
 
     <div style="height: 20px"/>
 
@@ -156,7 +156,7 @@
 </template>
 
 <script>
-import { getList, updataUserInfo } from '@/api/api'
+import { getList, updataUserInfo, getListAll } from '@/api/api'
 export default {
   data() {
     return {
@@ -188,8 +188,17 @@ export default {
   },
   created() {
     this.getList(1)
+    getListAll({}).then(response => {
+      const data = response.data
+      console.log(data)
+    })
   },
   methods: {
+    getExcel() {
+      var url = 'http://104.245.42.25/api/exportCsv'
+      console.info(url)
+      window.location = url // 这里不能使用get方法跳转，否则下载不成功
+    },
     statusSeach() {
       this.formInline.phone = ''
       this.getList(1)
@@ -199,6 +208,7 @@ export default {
         this.getList(this.pageNum)
       })
     },
+
     update(id) {
       this.$router.push({ path: '/permission/upDate/' + id })
       console.log(id)
