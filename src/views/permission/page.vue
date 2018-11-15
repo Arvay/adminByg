@@ -14,39 +14,13 @@
         <el-form-item label="手机号">
           <el-input v-model="formInline.phone" style="width: 120px" placeholder="在此输入" @keyup.enter.native="getList(1)"/>
         </el-form-item>
-
-        <!--<el-form-item label="出发地">
-          <el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>
-        </el-form-item>
-
-        <el-form-item label="目的地">
-          <el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>
-        </el-form-item>-->
-
-        <!-- <el-form-item label="席别">
-          <el-select v-model="formInline.region" placeholder="选择状态" style="width: 110px">
-            <el-option label="商务座" value="0"/>
-            <el-option label="特等座" value="1"/>
-            <el-option label="一等座" value="2"/>
-            <el-option label="二等座" value="3"/>
-            <el-option label="高级软无" value="4"/>
-            <el-option label="软卧" value="5"/>
-            <el-option label="硬卧" value="6"/>
-            <el-option label="动卧" value="7"/>
-            <el-option label="高级动卧" value="8"/>
-            <el-option label="软座" value="9"/>
-            <el-option label="硬座" value="10"/>
-            <el-option label="无座" value="11"/>
-          </el-select>
-        </el-form-item>-->
-
       </el-form>
     </div>
 
     <el-tag style="float: right" type="success">总共{{ sum }}条数据</el-tag>
 
-    <el-button type="danger" icon="el-icon-delete">删除选中</el-button>
-    <el-button type="primary">已处理</el-button>
+    <el-button type="danger" icon="el-icon-delete" @click="delAllF">删除选中</el-button>
+    <el-button type="primary" @click="updataALl">已处理</el-button>
     <el-button type="primary" icon="el-icon-download" @click="getExcel">导出</el-button>
 
     <div style="height: 20px"/>
@@ -156,12 +130,13 @@
 </template>
 
 <script>
-import { getList, updataUserInfo, getListAll } from '@/api/api'
+import { getList, updataUserInfo, getListAll, delAll, updataStatusALl } from '@/api/api'
 export default {
   data() {
     return {
       sum: 0,
       infoList: [],
+      idAll: '',
       formInline: {
         phone: '',
         user: '',
@@ -189,14 +164,35 @@ export default {
   created() {
     this.getList(1)
     getListAll({}).then(response => {
-      const data = response.data
-      console.log(data)
     })
   },
   methods: {
+    delAllF() {
+      for (var val of this.multipleSelection) {
+        this.idAll += val.id + ','
+      }
+      this.idAll = this.idAll.substr(0, this.idAll.length - 1)
+      delAll({ idAll: this.idAll }).then(res => {
+        this.getList(this.pageNum)
+      })
+        .catch(err => {
+          alert(err.data.message)
+        })
+    },
+    updataALl() {
+      for (var val of this.multipleSelection) {
+        this.idAll += val.id + ','
+      }
+      this.idAll = this.idAll.substr(0, this.idAll.length - 1)
+      updataStatusALl({ idAll: this.idAll }).then(res => {
+        this.getList(this.pageNum)
+      })
+        .catch(err => {
+          alert(err.data.message)
+        })
+    },
     getExcel() {
       var url = 'http://104.245.42.25/api/exportCsv'
-      console.info(url)
       window.location = url // 这里不能使用get方法跳转，否则下载不成功
     },
     statusSeach() {
@@ -211,7 +207,6 @@ export default {
 
     update(id) {
       this.$router.push({ path: '/permission/upDate/' + id })
-      console.log(id)
     },
     remUser(id) {
       updataUserInfo({ isDel: 1, id: id }).then(res => {
@@ -231,7 +226,6 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val
-      console.log(val)
     }
   }
 }

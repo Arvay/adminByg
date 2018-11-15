@@ -3,25 +3,25 @@
 
     <div>
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="状态">
-          <el-select v-model="formInline.region" placeholder="选择状态" style="width: 110px">
-            <el-option label="未处理" value="0"/>
-            <el-option label="已处理" value="1"/>
-            <el-option label="全部" value="2"/>
-          </el-select>
-        </el-form-item>
+        <!--<el-form-item label="状态">-->
+        <!--<el-select v-model="formInline.region" placeholder="选择状态" style="width: 110px">-->
+        <!--<el-option label="未处理" value="0"/>-->
+        <!--<el-option label="已处理" value="1"/>-->
+        <!--<el-option label="全部" value="2"/>-->
+        <!--</el-select>-->
+        <!--</el-form-item>-->
 
-        <el-form-item label="手机号">
-          <el-input v-model="formInline.user" style="width: 120px" placeholder="在此输入"/>
-        </el-form-item>
+        <!--<el-form-item label="手机号">-->
+        <!--<el-input v-model="formInline.user" style="width: 120px" placeholder="在此输入"/>-->
+        <!--</el-form-item>-->
 
-        <el-form-item label="出发地">
-          <el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>
-        </el-form-item>
+        <!--<el-form-item label="出发地">-->
+        <!--<el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>-->
+        <!--</el-form-item>-->
 
-        <el-form-item label="目的地">
-          <el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>
-        </el-form-item>
+        <!--<el-form-item label="目的地">-->
+        <!--<el-input v-model="formInline.user" style="width: 100px" placeholder="在此输入"/>-->
+        <!--</el-form-item>-->
 
         <!--<el-form-item label="席别">
           <el-select v-model="formInline.region" placeholder="选择状态" style="width: 110px">
@@ -45,7 +45,7 @@
 
     <el-tag style="float: right" type="success">总共{{ sum }}条数据</el-tag>
 
-    <el-button type="primary" icon="el-icon-download">导出</el-button>
+    <!--<el-button type="primary" icon="el-icon-download">导出</el-button>-->
 
     <div style="height: 20px"/>
 

@@ -16,6 +16,22 @@ export function getList(query, page, del, phone, status) {
   })
 }
 
+export function delAll(data) {
+  return request({
+    url: `${airHost}/delAll`,
+    method: 'post',
+    params: data
+  })
+}
+
+export function updataStatusALl(data) {
+  return request({
+    url: `${airHost}/updata/status/all`,
+    method: 'post',
+    params: data
+  })
+}
+
 export function updataUserInfo(data) {
   return request({
     url: `${airHost}/updataUserInfo`,
