@@ -57,8 +57,7 @@ export const asyncRouterMap = [
     alwaysShow: true, // will always show the root menu
     meta: {
       title: '订单管理',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      icon: 'lock'
     },
     children: [
       {
@@ -66,8 +65,7 @@ export const asyncRouterMap = [
         component: () => import('@/views/permission/page'),
         name: '预售订单',
         meta: {
-          title: '预售订单',
-          roles: ['admin'] // or you can only set roles in sub nav
+          title: '预售订单'
         }
       },
       {
