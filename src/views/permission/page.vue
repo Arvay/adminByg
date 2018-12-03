@@ -38,7 +38,7 @@
         :show-overflow-tooltip="true"
         label="提交时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.create_time.substring(0, 10) }}</span>
+          <span>{{ scope.row.create_time.substring(0, 10) }}-{{ scope.row.create_time.substring(11, 19) }}</span>
         </template>
       </el-table-column>
 
