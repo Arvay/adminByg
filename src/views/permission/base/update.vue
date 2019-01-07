@@ -55,7 +55,7 @@
 
       <el-form-item>
         <el-button type="primary">保存</el-button>
-        <el-button @click="$router.back()">返回</el-button>
+        <el-button @click="back()">返回</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -100,6 +100,9 @@ export default {
     this.getUserInfo(this.$route.params.id)
   },
   methods: {
+    back() {
+      this.$router.push({ path: '/permission/page/' + this.$route.params.page })
+    },
     getUserInfo(id) {
       getUserInfo({}, id).then(response => {
         const data = response.data.data[0]

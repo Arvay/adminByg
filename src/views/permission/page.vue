@@ -123,7 +123,6 @@
 
     <el-pagination
       :total="sum"
-      :current-page.sync = "pageNum"
       background
       layout="prev, pager, next"
       @current-change="handleCurrentChange"/>
@@ -157,7 +156,7 @@ export default {
       }
       ],
       value: '',
-      pageNum: parseInt(this.$route.params.id),
+      pageNum: !this.$route.params.id ? 1 : this.$route.params.id,
       value2: false,
       multipleSelection: []
     }

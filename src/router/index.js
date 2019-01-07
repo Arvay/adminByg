@@ -64,6 +64,15 @@ export const asyncRouterMap = [
         path: 'page/:id',
         component: () => import('@/views/permission/page'),
         name: '预售订单',
+        hidden: true,
+        meta: {
+          title: '预售订单'
+        }
+      },
+      {
+        path: 'page',
+        component: () => import('@/views/permission/page'),
+        name: '预售订单',
         meta: {
           title: '预售订单'
         }
