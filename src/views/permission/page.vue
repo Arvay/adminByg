@@ -123,6 +123,7 @@
 
     <el-pagination
       :total="sum"
+      :current-page.sync = "pageNum"
       background
       layout="prev, pager, next"
       @current-change="handleCurrentChange"/>
@@ -156,13 +157,13 @@ export default {
       }
       ],
       value: '',
-      pageNum: 1,
+      pageNum: parseInt(this.$route.params.id),
       value2: false,
       multipleSelection: []
     }
   },
   created() {
-    this.getList(1)
+    this.getList(this.pageNum)
     getListAll({}).then(response => {
     })
   },
@@ -197,7 +198,7 @@ export default {
     },
     statusSeach() {
       this.formInline.phone = ''
-      this.getList(1)
+      this.getList(this.pageNum)
     },
     statusChange(id, val) {
       updataUserInfo({ status: val, id: id }).then(res => {
@@ -206,7 +207,7 @@ export default {
     },
 
     update(id) {
-      this.$router.push({ path: '/permission/upDate/' + id })
+      this.$router.push({ path: '/permission/upDate/' + id + '/' + this.pageNum })
     },
     remUser(id) {
       updataUserInfo({ isDel: 1, id: id }).then(res => {

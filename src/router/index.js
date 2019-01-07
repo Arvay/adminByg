@@ -61,7 +61,7 @@ export const asyncRouterMap = [
     },
     children: [
       {
-        path: 'page',
+        path: 'page/:id',
         component: () => import('@/views/permission/page'),
         name: '预售订单',
         meta: {
@@ -78,7 +78,7 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: 'update/:id',
+        path: 'update/:id/:page',
         component: () => import('@/views/permission/base/update'),
         name: '编辑',
         hidden: true,

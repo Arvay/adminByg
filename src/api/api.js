@@ -48,6 +48,14 @@ export function getUserInfo(data, id) {
   })
 }
 
+export function getTxt(data, id) {
+  return request({
+    url: `${airHost}/exportTxt`,
+    method: 'get',
+    params: data
+  })
+}
+
 export function login(data, name, password) {
   return request({
     url: `${airHost}/login`,
